@@ -110,51 +110,56 @@
       <aside class="card" id="form">
         <div class="pad">
           <h2 style="margin-top:0">Prayer Request</h2>
-          <!--
-            ✅ Form options (choose one):
-            1) Netlify Forms: host this page on Netlify and keep the form exactly as-is (has data-netlify + name). Netlify handles submissions for free.
-            2) Formspree: replace the form action below with your Formspree endpoint (e.g., https://formspree.io/f/xyz) and remove data-netlify.
-            3) Jotform/Google Form: paste the embed script or iframe inside this card instead of the <form> block.
-          -->
-          <!-- Jotform Embed -->
-<div class="form" id="jotform-embed">
-  <iframe
-    id="JotFormIFrame-252578798196177"
-    title="Prayer Request"
-    onload="window.parent.scrollTo(0,0)"
-    allowtransparency="true"
-    allow="geolocation; microphone; camera"
-    src="https://form.jotform.com/252578798196177"
-    frameborder="0"
-    style="min-width:100%; height: 700px; border:0; border-radius:12px;"
-    scrolling="no"
-    loading="lazy"
-  ></iframe>
-</div>
-<script type="text/javascript">
-(function() {
-  var ifr = document.getElementById("JotFormIFrame-252578798196177");
-  // Auto-resize height when Jotform posts messages
-  window.addEventListener("message", function(e){
-    if(!ifr) return;
-    if(e.origin.indexOf("jotform.com") === -1 && e.origin.indexOf("jotform.pro") === -1) return;
-    var data = (typeof e.data === 'string') ? e.data.split(":") : [];
-    if(data[0] === "setHeight" && data[2] == ifr.id){
-      var newH = Number(data[1]);
-      if(!isNaN(newH) && newH > 0){ ifr.style.height = newH + "px"; }
-    }
-  }, false);
-  // Ensure full width on mobile
-  function setFullWidth(){ if(ifr) { ifr.style.minWidth = "100%"; } }
-  window.addEventListener('resize', setFullWidth);
-  setFullWidth();
-})();
-</script>
+          <form class="form" name="prayer" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="prayer">
+            <p class="hp">
+              <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
+            <div class="row">
+              <p>
+                <label for="name">Name <span class="hint">(optional)</span></label>
+                <input id="name" name="name" autocomplete="name" placeholder="First name (or leave blank)" />
+              </p>
+              <p>
+                <label for="email">Email <span class="hint">(optional)</span></label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+              </p>
+            </div>
+
+            <p>
+              <label for="topic">Topic <span class="hint">(optional)</span></label>
+              <select id="topic" name="topic">
+                <option value="">Select a topic…</option>
+                <option>Health</option>
+                <option>Family</option>
+                <option>Work/Finances</option>
+                <option>Grief</option>
+                <option>Thanksgiving</option>
+                <option>Other</option>
+              </select>
+            </p>
+
+            <p>
+              <label for="request">Your request <span class="hint">(required)</span></label>
+              <textarea id="request" name="request" required placeholder="How can we pray with you?"></textarea>
+            </p>
+
+            <p>
+              <label class="small"><input type="checkbox" name="updates" value="yes"> Keep me updated with a short weekly prayer email (optional)</label>
+            </p>
+
+            <button class="btn primary" type="submit">Send request</button>
+            <p class="disclaimer">We never sell or share your information. You can remain anonymous. By submitting, you agree we may contact you only about this request if needed.</p>
+
+            <div id="success" class="success" role="status" aria-live="polite">
+              <p>Thank you! Your request has been received. Our team will be praying with you within 24 hours.</p>
+            </div>
+          </form>
         </div>
       </aside>
     </div>
 
-    <!-- About / Trust Signals -->
     <section id="about" class="card" style="margin-top:28px">
       <div class="pad">
         <h2 style="margin-top:0">How it works</h2>
@@ -185,7 +190,6 @@
       </div>
     </section>
 
-    <!-- Privacy -->
     <section id="privacy" class="card" style="margin-top:28px">
       <div class="pad">
         <h2 style="margin-top:0">Your privacy matters</h2>
@@ -209,15 +213,13 @@
   </footer>
 
   <script>
-    // dynamic year & a friendly stat ticker
     document.getElementById('year').textContent = new Date().getFullYear();
-    // lightweight count up animation for stat-people
     (function(){
       const el = document.getElementById('stat-people');
-      const target = 12482; // example
+      const target = 12482;
       const dur = 900;
       const start = performance.now();
-      const from = Math.max(0, target - 178); // a tiny ramp for flair
+      const from = Math.max(0, target - 178);
       function step(t){
         const p = Math.min(1, (t - start)/dur);
         const val = Math.floor(from + (target - from) * p);
@@ -227,33 +229,13 @@
       requestAnimationFrame(step);
     })();
 
-    // Client-side success UI for non-Netlify handlers.
-    // If you use Netlify, you can set a success page in the dashboard and remove this.
     const form = document.querySelector('form[name="prayer"]');
     form?.addEventListener('submit', function(e){
-      // If hosted on GitHub Pages or using Formspree, this prevents navigation and shows a success message.
-      // --- Option A: Using Formspree ---
-      // Replace ACTION below with your endpoint and uncomment fetch block.
-      // form.action = 'https://formspree.io/f/your-id';
-
-      // If no external action is set, let Netlify handle it via standard POST.
       if(form.getAttribute('data-netlify') !== 'true' && !form.action){
         e.preventDefault();
-        const data = new FormData(form);
-        // Example client-only success UX (no backend)
-        // NOTE: Remove this block when wiring up Formspree or Netlify success page
         document.getElementById('success').classList.add('show');
         form.reset();
       }
-
-      // --- If using Formspree, use this instead ---
-      // e.preventDefault();
-      // fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }})
-      //   .then(r => {
-      //     document.getElementById('success').classList.add('show');
-      //     form.reset();
-      //   })
-      //   .catch(() => alert('There was a problem sending your request. Please try again.'))
     });
   </script>
 </body>
