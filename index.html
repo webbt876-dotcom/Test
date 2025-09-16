@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Free Site</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <h1>hello, world 👋</h1>
+    <p>this entire site is hosted for free.</p>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#contact">contact</a>
+      <a href="https://github.com" target="_blank" rel="noopener">github</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section id="about">
+      <h2>about</h2>
+      <p>edit this text to say whatever you want. it’s just HTML + CSS + a tiny bit of JS.</p>
+    </section>
+
+    <section id="contact">
+      <h2>contact</h2>
+      <form id="contact-form">
+        <label>
+          your email
+          <input type="email" required />
+        </label>
+        <label>
+          message
+          <textarea required></textarea>
+        </label>
+        <button type="submit">send</button>
+        <p id="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="wrap"><small>© <span id="year"></span> you.</small></footer>
+  <script src="script.js"></script>
+</body>
+</html>
