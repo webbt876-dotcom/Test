@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>We’re Praying With You — Hope & Help</title>
+  <title>We’re Praying With You — American Prayers</title>
   <meta name="description" content="Share your prayer request confidentially. Our nonprofit team prays daily and will lift your request up this week.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,8 @@
     .wrap{max-width:var(--max);margin:0 auto;padding:20px}
     header.nav{position:sticky;top:0;background:linear-gradient(to bottom, rgba(14,17,22,.9), rgba(14,17,22,.7));backdrop-filter:saturate(140%) blur(10px);z-index:10;border-bottom:1px solid rgba(255,255,255,.06)}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
-    .brand .logo{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 30px rgba(126,240,193,.25)}
+    .brand .logo{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 30px rgba(126,240,193,.25)}
+    .brand .logo img.logo-img{max-width:70%;max-height:70%;object-fit:contain;display:block;opacity:.95}
     .nav-grid{display:flex;justify-content:space-between;align-items:center}
     .nav-links a{opacity:.8;margin-left:16px;text-decoration:none}
     .nav-links a:hover{opacity:1}
@@ -81,7 +82,7 @@
   <!-- Top Nav -->
   <header class="nav">
     <div class="wrap nav-grid">
-      <div class="brand"><span class="logo" aria-hidden>✦</span> <span>Hope & Help Foundation</span></div>
+      <div class="brand"><span class="logo" aria-hidden><img src="logo.png" alt="American Prayers logo" class="logo-img"></span> <span>American Prayers</span></div>
       <nav class="nav-links" aria-label="Primary">
         <a href="#form">Send a Prayer</a>
         <a href="#about">About</a>
@@ -206,7 +207,7 @@
   <footer class="wrap">
     <div class="fine">
       <div>
-        © <span id="year"></span> Hope & Help Foundation · 501(c)(3) Nonprofit
+        © <span id="year"></span> American Prayers · 501(c)(3) Nonprofit
       </div>
       <div class="small">PO Box 123, Portsmouth, OH · <a href="mailto:hello@example.org">hello@example.org</a></div>
     </div>
@@ -238,10 +239,5 @@
       }
     });
   </script>
-  <!-- Hidden registration form so Netlify always detects it -->
-<form name="prayer" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="request" />
-</form>
-
 </body>
 </html>
