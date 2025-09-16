@@ -3,44 +3,275 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Free Site</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>We’re Praying With You — Hope & Help</title>
+  <meta name="description" content="Share your prayer request confidentially. Our nonprofit team prays daily and will lift your request up this week.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0e1116;
+      --card: #121722;
+      --muted: #9fb3c8;
+      --text: #e6eef8;
+      --accent: #8dd0ff;
+      --accent-2:#7ef0c1;
+      --ring: rgba(141,208,255,.55);
+      --max: 980px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font:16px/1.6 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 10% -10%, rgba(126,240,193,.18), transparent 55%), radial-gradient(900px 600px at 90% -20%, rgba(141,208,255,.18), transparent 60%), var(--bg);}    
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:20px}
+    header.nav{position:sticky;top:0;background:linear-gradient(to bottom, rgba(14,17,22,.9), rgba(14,17,22,.7));backdrop-filter:saturate(140%) blur(10px);z-index:10;border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .brand .logo{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 30px rgba(126,240,193,.25)}
+    .nav-grid{display:flex;justify-content:space-between;align-items:center}
+    .nav-links a{opacity:.8;margin-left:16px;text-decoration:none}
+    .nav-links a:hover{opacity:1}
+
+    .hero{padding:64px 0 28px}
+    .hero h1{font-size:clamp(28px,6vw,48px);line-height:1.1;margin:10px 0}
+    .lead{color:var(--muted);max-width:720px}
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);text-decoration:none;cursor:pointer;transition:transform .05s ease, box-shadow .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--accent), var(--accent-2));color:#0b1220;font-weight:700;box-shadow:0 12px 30px rgba(141,208,255,.25), inset 0 0 1px rgba(0,0,0,.25)}
+    .btn.primary:hover{transform:translateY(-1px)}
+    .btn.ghost{background:rgba(255,255,255,.04)}
+
+    .grid{display:grid;gap:24px}
+    @media (min-width: 950px){.grid{grid-template-columns:1.1fr .9fr;align-items:start}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:18px;box-shadow:0 12px 36px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.03)}
+    .card .pad{padding:20px}
+
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+    .stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px}
+    .stat b{display:block;font-size:20px}
+    .stat small{color:var(--muted)}
+
+    .form{display:grid;gap:12px}
+    label{font-weight:600}
+    .hint{color:var(--muted);font-weight:400}
+    input,textarea,select{width:100%;border:1px solid rgba(255,255,255,.12);background:#0d1420;color:var(--text);border-radius:12px;padding:12px 14px;outline:none}
+    textarea{min-height:140px;resize:vertical}
+    input:focus,textarea:focus,select:focus{box-shadow:0 0 0 4px var(--ring);border-color:transparent}
+    .row{display:grid;gap:12px}
+    @media (min-width: 640px){.row{grid-template-columns:1fr 1fr}}
+    .disclaimer{font-size:13px;color:var(--muted)}
+
+    .quote{display:flex;gap:14px;align-items:flex-start}
+    .quote .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+    .quote p{margin:0}
+
+    footer{margin:40px 0;color:var(--muted);font-size:14px}
+    .fine{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+    .small{font-size:12px}
+
+    /* success state */
+    .success{display:none}
+    .success.show{display:block}
+
+    /* hide spam honeypot */
+    .hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+  </style>
 </head>
 <body>
-  <header class="wrap">
-    <h1>hello, world 👋</h1>
-    <p>this entire site is hosted for free.</p>
-    <nav>
-      <a href="#about">about</a>
-      <a href="#contact">contact</a>
-      <a href="https://github.com" target="_blank" rel="noopener">github</a>
-    </nav>
+  <!-- Top Nav -->
+  <header class="nav">
+    <div class="wrap nav-grid">
+      <div class="brand"><span class="logo" aria-hidden>✦</span> <span>Hope & Help Foundation</span></div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#form">Send a Prayer</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="wrap">
-    <section id="about">
-      <h2>about</h2>
-      <p>edit this text to say whatever you want. it’s just HTML + CSS + a tiny bit of JS.</p>
+  <!-- Hero & Form -->
+  <main class="wrap hero">
+    <div class="grid">
+      <section>
+        <h1>Share your prayer request. <br />We’ll pray this week.</h1>
+        <p class="lead">Our nonprofit team prays daily. Share as much—or as little—as you want. Every request is confidential and read by a real person within 24 hours.</p>
+        <div class="stats">
+          <div class="stat"><b id="stat-people">12,482</b><small>prayers lifted</small></div>
+          <div class="stat"><b>24/7</b><small>prayer coverage</small></div>
+          <div class="stat"><b>100%</b><small>free & confidential</small></div>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#form">Send a prayer request</a>
+          <a class="btn ghost" href="#about">Learn how it works</a>
+        </div>
+      </section>
+
+      <aside class="card" id="form">
+        <div class="pad">
+          <h2 style="margin-top:0">Prayer Request</h2>
+          <!--
+            ✅ Form options (choose one):
+            1) Netlify Forms: host this page on Netlify and keep the form exactly as-is (has data-netlify + name). Netlify handles submissions for free.
+            2) Formspree: replace the form action below with your Formspree endpoint (e.g., https://formspree.io/f/xyz) and remove data-netlify.
+            3) Jotform/Google Form: paste the embed script or iframe inside this card instead of the <form> block.
+          -->
+          <form class="form" name="prayer" method="POST" data-netlify="true">
+            <!-- Netlify required hidden field -->
+            <input type="hidden" name="form-name" value="prayer">
+
+            <!-- anti-spam honeypot (Netlify convention) -->
+            <p class="hp">
+              <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
+            <div class="row">
+              <p>
+                <label for="name">Name <span class="hint">(optional)</span></label>
+                <input id="name" name="name" autocomplete="name" placeholder="First name (or leave blank)" />
+              </p>
+              <p>
+                <label for="email">Email <span class="hint">(optional)</span></label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+              </p>
+            </div>
+
+            <p>
+              <label for="topic">Topic <span class="hint">(optional)</span></label>
+              <select id="topic" name="topic">
+                <option value="">Select a topic…</option>
+                <option>Health</option>
+                <option>Family</option>
+                <option>Work/Finances</option>
+                <option>Grief</option>
+                <option>Thanksgiving</option>
+                <option>Other</option>
+              </select>
+            </p>
+
+            <p>
+              <label for="request">Your request <span class="hint">(required)</span></label>
+              <textarea id="request" name="request" required placeholder="How can we pray with you?"></textarea>
+            </p>
+
+            <p>
+              <label class="small"><input type="checkbox" name="updates" value="yes"> Keep me updated with a short weekly prayer email (optional)</label>
+            </p>
+
+            <button class="btn primary" type="submit">Send request</button>
+            <p class="disclaimer">We never sell or share your information. You can remain anonymous. By submitting, you agree we may contact you only about this request if needed.</p>
+
+            <!-- Client-side success message (for Formspree/others). Netlify provides its own success page you can configure, but this is a nice UX regardless. -->
+            <div id="success" class="success" role="status" aria-live="polite">
+              <p>Thank you! Your request has been received. Our team will be praying with you within 24 hours.</p>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </div>
+
+    <!-- About / Trust Signals -->
+    <section id="about" class="card" style="margin-top:28px">
+      <div class="pad">
+        <h2 style="margin-top:0">How it works</h2>
+        <div class="grid" style="--max:1100px">
+          <div>
+            <ol>
+              <li><strong>Share your request</strong> using the form above. Share as much or as little as you’re comfortable with.</li>
+              <li><strong>We review daily.</strong> A real person on our team reads every submission.</li>
+              <li><strong>We pray within 24 hours.</strong> Your request is shared (confidentially) with our prayer team.</li>
+              <li><strong>Optional follow‑up.</strong> If you opted in, we’ll send a brief weekly email with encouragement.</li>
+            </ol>
+          </div>
+          <div>
+            <div class="quote card">
+              <div class="pad" style="display:flex;gap:14px;align-items:flex-start">
+                <span class="avatar" aria-hidden="true"></span>
+                <p><em>“Thank you for praying for my mom’s surgery. Knowing your team was praying gave us peace, and her recovery is going well.”</em><br><span class="small">— M., Ohio</span></p>
+              </div>
+            </div>
+            <div class="quote card" style="margin-top:12px">
+              <div class="pad" style="display:flex;gap:14px;align-items:flex-start">
+                <span class="avatar" aria-hidden="true"></span>
+                <p><em>“I’m grateful I could stay anonymous. I still felt seen and supported.”</em><br><span class="small">— J., Kentucky</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>contact</h2>
-      <form id="contact-form">
-        <label>
-          your email
-          <input type="email" required />
-        </label>
-        <label>
-          message
-          <textarea required></textarea>
-        </label>
-        <button type="submit">send</button>
-        <p id="status" aria-live="polite"></p>
-      </form>
+    <!-- Privacy -->
+    <section id="privacy" class="card" style="margin-top:28px">
+      <div class="pad">
+        <h2 style="margin-top:0">Your privacy matters</h2>
+        <p class="lead">We keep requests confidential. We don’t post them publicly. You may submit without your name or email.</p>
+        <ul>
+          <li>Data used only to receive, review, and respond to your prayer request.</li>
+          <li>Access restricted to our trained prayer team leaders.</li>
+          <li>Remove my data: email <a href="mailto:hello@example.org">hello@example.org</a> and we’ll delete your submission.</li>
+        </ul>
+      </div>
     </section>
   </main>
 
-  <footer class="wrap"><small>© <span id="year"></span> you.</small></footer>
-  <script src="script.js"></script>
+  <footer class="wrap">
+    <div class="fine">
+      <div>
+        © <span id="year"></span> Hope & Help Foundation · 501(c)(3) Nonprofit
+      </div>
+      <div class="small">PO Box 123, Portsmouth, OH · <a href="mailto:hello@example.org">hello@example.org</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // dynamic year & a friendly stat ticker
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // lightweight count up animation for stat-people
+    (function(){
+      const el = document.getElementById('stat-people');
+      const target = 12482; // example
+      const dur = 900;
+      const start = performance.now();
+      const from = Math.max(0, target - 178); // a tiny ramp for flair
+      function step(t){
+        const p = Math.min(1, (t - start)/dur);
+        const val = Math.floor(from + (target - from) * p);
+        el.textContent = val.toLocaleString();
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+
+    // Client-side success UI for non-Netlify handlers.
+    // If you use Netlify, you can set a success page in the dashboard and remove this.
+    const form = document.querySelector('form[name="prayer"]');
+    form?.addEventListener('submit', function(e){
+      // If hosted on GitHub Pages or using Formspree, this prevents navigation and shows a success message.
+      // --- Option A: Using Formspree ---
+      // Replace ACTION below with your endpoint and uncomment fetch block.
+      // form.action = 'https://formspree.io/f/your-id';
+
+      // If no external action is set, let Netlify handle it via standard POST.
+      if(form.getAttribute('data-netlify') !== 'true' && !form.action){
+        e.preventDefault();
+        const data = new FormData(form);
+        // Example client-only success UX (no backend)
+        // NOTE: Remove this block when wiring up Formspree or Netlify success page
+        document.getElementById('success').classList.add('show');
+        form.reset();
+      }
+
+      // --- If using Formspree, use this instead ---
+      // e.preventDefault();
+      // fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }})
+      //   .then(r => {
+      //     document.getElementById('success').classList.add('show');
+      //     form.reset();
+      //   })
+      //   .catch(() => alert('There was a problem sending your request. Please try again.'))
+    });
+  </script>
 </body>
 </html>
+
